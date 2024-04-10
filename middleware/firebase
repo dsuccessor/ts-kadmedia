@@ -1,0 +1,66 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBHGEnhDaEJQcLvSWnezwfiap0yMnqtkgY",
+  authDomain: "kadmedia.firebaseapp.com",
+  projectId: "kadmedia",
+  storageBucket: "kadmedia.appspot.com",
+  messagingSenderId: "367331835304",
+  appId: "1:367331835304:web:87617f182571dae270b19d",
+  measurementId: "G-VQSNR1BJB4",
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
+// Import Firebase SDK and initialize Firebase app
+import firebase from "firebase/app";
+import "firebase/messaging";
+
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  appId: "YOUR_APP_ID",
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+// Retrieve Firebase Messaging object
+const messaging = firebase.messaging();
+
+// Request permission to receive notifications
+messaging
+  .requestPermission()
+  .then(() => {
+    console.log("Notification permission granted.");
+
+    // Get registration token
+    messaging
+      .getToken()
+      .then((token) => {
+        console.log("FCM token:", token);
+        // Send token to your server to associate it with the user
+        // Example: sendTokenToServer(token);
+      })
+      .catch((error) => {
+        console.error("Error getting FCM token:", error);
+      });
+  })
+  .catch((error) => {
+    console.error("Unable to get permission to notify.", error);
+  });
+
+// Handle incoming notifications when the app is in the foreground
+messaging.onMessage((payload) => {
+  console.log("Message received:", payload);
+  // Handle incoming notification
+});
