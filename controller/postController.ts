@@ -44,7 +44,7 @@ const userFeed = async (req: Request, res: Response) => {
   const { id, pageNo, recordPerPage } = req?.query;
 
   // Checking for missing field from the client request
-  if (!id) {
+  if (!id || !pageNo) {
     console?.log({ message: "Invalid request due to missing field" });
     return res
       ?.status(400)
@@ -69,10 +69,14 @@ const userFeed = async (req: Request, res: Response) => {
       const post = await postModel?.find({user: user as any});
       feed?.push(...post);
     }
+
+    // if (feed?.length < 1){
+    //   return res.status(403).json({message: 'R'
+    // }
     // Handling pagination
+    const rpp = recordPerPage == undefined || null ? 5 : parseInt(recordPerPage as string);
     const page = parseInt(pageNo as string);
-    const pageSize =
-      (parseInt(recordPerPage as string) > 10 && 10) || (parseInt(recordPerPage as string) ?? 5);
+    const pageSize = rpp > 10 ? 10 : rpp;
     const startIndex = pageSize * (page - 1);
     const endIndex = page * pageSize;
     const recordSize = feed?.length;

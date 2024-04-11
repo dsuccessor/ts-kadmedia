@@ -119,7 +119,7 @@ const loginUser = async (req: Request, res: Response) => {
   }
 
   const token = jwt.sign({ email, password }, process.env.AUTH_KEY!, {
-    expiresIn: 60 * 10,
+    expiresIn: 60 * 20,
   });
   // const {_doc, ...rest} = userValid as any
   const result = await removePwd((userValid as any)._doc);

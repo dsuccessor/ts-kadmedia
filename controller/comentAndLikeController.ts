@@ -23,7 +23,7 @@ const commentOnPost = async (req: SocketRequest, res: Response) => {
   // posting comment under the current post
   if (postExist) {
 
-    const pushPost = await comment_like_Model.findOneAndUpdate({ post: postId }, { $push: { comments: { comment: comment, image: image, video: video } } }, { new: true });
+    const pushPost = await comment_like_Model.findOneAndUpdate({ post: postId }, { $push: { comments: { user: userId, comment: comment, image: image, video: video } } }, { new: true });
     if (pushPost) {
       // Sending comment notification to the user
       io.emit(
